@@ -28,7 +28,7 @@
                             <!--<td class="table-actions"> Visualizar Editar Apagar </td>-->
                             <td class="table-actions">
                                 <a href="#" class="btn-primary"> Visualizar </a>
-                                <a href="#" class="btn-warning"> Editar </a>
+                                <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn-warning"> Editar </a>
                                 <a href="#" class="btn-danger"> Apagar </a>
                             </td>
                         </tr>

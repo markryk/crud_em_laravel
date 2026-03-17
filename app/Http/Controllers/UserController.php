@@ -39,4 +39,28 @@ class UserController extends Controller {
             return back()->withInput()->with('error', 'Usuário não cadastrado!');
         }
     }
+
+    //Carregar o formulário de editar usuário
+    public function edit(User $user){
+
+        //Carregar a view
+        return view('users.edit', ['user' => $user]);
+    }
+
+    //Editar no banco de dados, o usuário
+    public function update(UserRequest $request, User $user){
+        try {
+            //Editar as informações do registro no banco de dados
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+
+            //Redireciona o usuário, envia mensagem de sucesso
+            return redirect()->route('user.edit', ['user' => $user->id])->with('success', 'Usuário editado com sucesso!');
+        } catch (Exception $e) {
+            //Redireciona o usuário, envia mensagem de erro
+            return back()->withInput()->with('error', 'Usuário não editado!');
+        }
+    }
 }
