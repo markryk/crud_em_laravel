@@ -7,6 +7,16 @@ use App\Models\User;
 use Exception;
 
 class UserController extends Controller {
+    
+    //Listar os usuários
+    public function index(){
+        //Recuperar os registros do banco de dados
+        $users = User::orderByDesc('id')->paginate(3);
+
+        //Carregar a view
+        return view('users.index', ['users' => $users]);
+    }
+
     //Carrega o formulário de cadastrar novo usuário
     public function create(){
 
