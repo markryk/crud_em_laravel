@@ -7,7 +7,7 @@ CRUD com Laravel 12 (cadastrar, listar, editar e apagar)
 * Node.js 22 ou superior (conferir versão: node -v)
 * Git (conferir versão: git -v)
 
-## Sequência para criar o projeto
+## Sequência para criar o projeto (ao criar pela primeira vez)
 
 Criar o projeto com Laravel
 
@@ -25,7 +25,7 @@ Acessar o conteúdo padrão do Laravel
 http://127.0.0.1:8000
 ```
 
-## Rodar o projeto
+## Rodar o projeto (retomar projeto já existente)
 
 - Baixar os arquivos do GitHub
 ```
@@ -33,6 +33,7 @@ git clone <repositorio_url>
 ```
 
 - Duplicar o arquivo ".env.example" e renomear para ".env".
+- Alterar no arquivo .env, as credenciais do banco de dados.
 
 Instalar as dependências do PHP
 ```
@@ -44,9 +45,24 @@ Gerar a chave
 php artisan key:generate
 ```
 
+Executar as migrations para criar a base de dados e as tabelas
+```
+php artisan migrate
+```
+
+Instalar as dependências do Node.js
+```
+npm install
+```
+
 Iniciar o projeto criado com Laravel
 ```
 php artisan serve
+```
+
+Executar as bibliotecas Node.js
+```
+npm run dev
 ```
 
 Acessar o conteúdo padrão do Laravel
@@ -68,9 +84,4 @@ php artisan make:view nome
 ```
 ```
 php artisan make:view users/create
-```
-
-Executar as migrations para criar a base de dados e as tabelas
-```
-php artisan migrate
 ```
