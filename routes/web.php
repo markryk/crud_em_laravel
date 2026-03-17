@@ -12,4 +12,7 @@
 
     Route::get('/edit-user/{user}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/update-user/{user}', [UserController::class, 'update'])->name('user.update');
+
+    Route::get('/edit-pwd_user/{user}', [UserController::class, 'pwd_edit'])->name('user.pwd_edit');
+    Route::put('/update-pwd_user/{user}', [UserController::class, 'pwd_update'])->name('user.pwd_update');
 ?>

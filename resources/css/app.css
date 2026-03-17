@@ -133,6 +133,11 @@
         @apply p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 cursor-pointer transition-colors;
     }
 
+    /*Botão laranja*/
+    .btn-orange {
+        @apply p-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 cursor-pointer transition-colors;
+    }
+
     /*Botão vermelho*/
     .btn-danger {
         @apply p-2 bg-red-500 text-white rounded-md hover:bg-red-600 cursor-pointer transition-colors;

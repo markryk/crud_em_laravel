@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PwdUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Exception;
@@ -61,6 +62,29 @@ class UserController extends Controller {
         } catch (Exception $e) {
             //Redireciona o usuário, envia mensagem de erro
             return back()->withInput()->with('error', 'Usuário não editado!');
+        }
+    }
+
+    //Carregar o formulário de editar senha do usuário
+    public function pwd_edit(User $user){
+
+        //Carregar a view
+        return view('users.pwd_edit', ['user' => $user]);
+    }
+
+    //Salvar nova senha no banco de dados
+    public function pwd_update(PwdUserRequest $request, User $user){
+        try {
+            //Editar as informações do registro no banco de dados
+            $user->update([
+                'password' => $request->password
+            ]);
+
+            //Redireciona o usuário, envia mensagem de sucesso
+            return redirect()->route('user.pwd_edit', ['user' => $user->id])->with('success', 'Nova senha atualizada com sucesso!');
+        } catch (Exception $e) {
+            //Redireciona o usuário, envia mensagem de erro
+            return back()->withInput()->with('error', 'Senha não atualizada!');
         }
     }
 }
