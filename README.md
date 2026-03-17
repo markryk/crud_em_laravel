@@ -69,6 +69,7 @@ Acessar o conteúdo padrão do Laravel
 ```
 http://127.0.0.1:8000
 ```
+## Comandos do Laravel
 
 Criar o controller
 ```
@@ -84,4 +85,12 @@ php artisan make:view nome
 ```
 ```
 php artisan make:view users/create
+```
+
+Criar um arquivo Request com validações do formulário
+```
+php artisan make:request NomeDoRequest
+```
+```
+php artisan make:request UserRequest
 ```
