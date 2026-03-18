@@ -4,7 +4,7 @@
     <div class="content">
         <div class="content-title">
             <h1 class="page-title"> Editar usuário </h1>
-            <span>
+            <span class="flex space-x-1">
                 <a href="{{ route('user.index') }}" class="btn-info"> Listar </a>
                 <a href="{{ route('user.show', ['user' => $user->id]) }}" class="btn-primary"> Visualizar </a>
             </span>

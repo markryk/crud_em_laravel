@@ -8,7 +8,7 @@
                 <a href="{{ route('user.index') }}" class="btn-info"> Listar </a>
                 <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn-warning"> Editar </a>
                 <a href="{{ route('user.pwd_edit', ['user' => $user->id]) }}" class="btn-orange"> Editar senha </a>
-                <form action="#" method="POST">
+                <form action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
                     @csrf
                     @method('delete')
 

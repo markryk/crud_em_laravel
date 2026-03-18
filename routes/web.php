@@ -17,4 +17,6 @@
 
     Route::get('/edit-pwd_user/{user}', [UserController::class, 'pwd_edit'])->name('user.pwd_edit');
     Route::put('/update-pwd_user/{user}', [UserController::class, 'pwd_update'])->name('user.pwd_update');
+
+    Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 ?>

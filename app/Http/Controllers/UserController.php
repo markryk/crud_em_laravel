@@ -93,4 +93,21 @@ class UserController extends Controller {
             return back()->withInput()->with('error', 'Senha não atualizada!');
         }
     }
+
+    //Exclui o usuário do banco de dados
+    public function destroy(User $user){
+        try {
+            //Exclui o registro do banco de dados
+            $user->delete();
+
+            //Redireciona o usuário, envia mensagem de sucesso
+            return redirect()->route('user.index')->with('success', 'Usuário excluído com sucesso!');
+
+
+        } catch(Exception $e) {
+
+            //Redireciona o usuário, envia a mensagem de erro
+            return redirect()->route('user.index')->with('error', 'Usuário não excluído');
+        }
+    }
 }
