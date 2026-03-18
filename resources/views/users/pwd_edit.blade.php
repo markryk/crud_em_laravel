@@ -6,7 +6,7 @@
             <h1 class="page-title"> Editar usuário </h1>
             <span>
                 <a href="{{ route('user.index') }}" class="btn-info"> Listar </a>
-                <a href="#" class="btn-primary"> Visualizar </a>
+                <a href="{{ route('user.show', ['user' => $user->id]) }}" class="btn-primary"> Visualizar </a>
             </span>
         </div>
 

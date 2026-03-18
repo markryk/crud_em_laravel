@@ -18,6 +18,12 @@ class UserController extends Controller {
         return view('users.index', ['users' => $users]);
     }
 
+    //Detalhes do usuário
+    public function show(User $user){
+        //Carregar a view
+        return view('users.show', ['user' => $user]);
+    }
+
     //Carrega o formulário de cadastrar novo usuário
     public function create(){
 
@@ -35,7 +41,7 @@ class UserController extends Controller {
                 'password' => $request->password
             ]);
 
-            return redirect()->route('user.create')->with('success', 'Usuário cadastrado com sucesso!');
+            return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Usuário cadastrado com sucesso!');
         } catch (Exception $e) {
             return back()->withInput()->with('error', 'Usuário não cadastrado!');
         }
@@ -58,7 +64,7 @@ class UserController extends Controller {
             ]);
 
             //Redireciona o usuário, envia mensagem de sucesso
-            return redirect()->route('user.edit', ['user' => $user->id])->with('success', 'Usuário editado com sucesso!');
+            return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Usuário editado com sucesso!');
         } catch (Exception $e) {
             //Redireciona o usuário, envia mensagem de erro
             return back()->withInput()->with('error', 'Usuário não editado!');
@@ -81,7 +87,7 @@ class UserController extends Controller {
             ]);
 
             //Redireciona o usuário, envia mensagem de sucesso
-            return redirect()->route('user.pwd_edit', ['user' => $user->id])->with('success', 'Nova senha atualizada com sucesso!');
+            return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Nova senha atualizada com sucesso!');
         } catch (Exception $e) {
             //Redireciona o usuário, envia mensagem de erro
             return back()->withInput()->with('error', 'Senha não atualizada!');

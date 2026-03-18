@@ -27,9 +27,8 @@
                             <td class="table-cell"> {{ $user->email }} </td>
                             <!--<td class="table-actions"> Visualizar Editar Apagar </td>-->
                             <td class="table-actions">
-                                <a href="#" class="btn-primary"> Visualizar </a>
+                                <a href="{{ route('user.show', ['user' => $user->id]) }}" class="btn-primary"> Visualizar </a>
                                 <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn-warning"> Editar </a>
-                                <a href="{{ route('user.pwd_edit', ['user' => $user->id]) }}" class="btn-orange"> Editar senha </a>
                                 <a href="#" class="btn-danger"> Apagar </a>
                             </td>
                         </tr>
