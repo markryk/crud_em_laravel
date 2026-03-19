@@ -44,6 +44,23 @@ DB_USERNAME=usuario_do_banco_de_dados
 DB_PASSWORD=senha_do_usuario_do_banco_de_dados
 ```
 
+- Funcionalidade de enviar e-mail (necessário alterar as credenciais do servidor de envio de e-mail no arquivo .env)
+- Utilizar servidor fake durante o desenvolvimento [Acessar envio gratuito de e-mail](https://mailtrap.io)
+- Utlizar servidor Iagente no ambiente de produção [Acessar envio gratuito de e-mail](https://login.iagente.com.br/solicitacao-conta-smtp/origin/celke)
+- Configurar DNS da Iagente [Acessar o tutorial](https://celke.com.br/artigo/como-configurar-o-dns-da-iagente-na-vps-da-hostinger)
+
+
+```
+MAIL_MAILER=smtp
+MAIL_SCHEME=null
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=nome_do_usuario
+MAIL_PASSWORD=senha_do_usuario
+MAIL_FROM_ADDRESS="email-remetente@meu-dominio.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
 Instalar as dependências do PHP
 ```
 composer install
@@ -115,3 +132,12 @@ Instalar a biblioteca para gerar PDF
 ```
 composer require barryvdh/laravel-dompdf
 ```
+
+Gerar a classe para enviar e-mail
+
+´´´
+php artisan make:mail NomeDaClasse
+´´´
+´´´
+php artisan make:mail UserPdfMail
+´´´
