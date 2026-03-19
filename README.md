@@ -103,3 +103,9 @@ php artisan make:request NomeDoRequest
 ```
 php artisan make:request UserRequest
 ```
+
+Instalar a biblioteca para apresentar o alerta personalizado.
+
+```
+npm install sweetalert2
+```
