@@ -143,6 +143,11 @@
         @apply p-2 bg-red-500 text-white rounded-md hover:bg-red-600 cursor-pointer transition-colors;
     }
 
+    /*Botão cinza*/
+    .btn-gray {
+        @apply p-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 cursor-pointer transition-colors;
+    }
+
     /** Fim botões **/
 
     /** Início Alertas **/

@@ -19,4 +19,6 @@
     Route::put('/update-pwd_user/{user}', [UserController::class, 'pwd_update'])->name('user.pwd_update');
 
     Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    Route::get('/generate-pdf-user/{user}', [UserController::class, 'generatePdf'])->name('user.generate-pdf');
 ?>
