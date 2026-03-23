@@ -4,7 +4,10 @@
     <div class="content">
         <div class="content-title">
             <h1 class="page-title"> Listar os usuários </h1>
-            <a href="{{ route('user.create') }}" class="btn-success"> Cadastrar </a>
+            <span class="flex space-x-1">
+                <a href="{{ route('user.create') }}" class="btn-success"> Cadastrar </a>
+                <a href="{{ url('generate-pdf-users').(request()->getQueryString() ? '?' . request()->getQueryString() : '') }}" class="btn-warning"> Gerar PDF </a>
+            </span>
         </div>
 
         <x-alert/>

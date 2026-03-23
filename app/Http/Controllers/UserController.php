@@ -47,7 +47,7 @@ class UserController extends Controller {
             'email' => $request->email,
             'start_date_registration' => $request->start_date_registration, 
             'end_date_registration' => $request->end_date_registration
-            ]);
+        ]);
     }
 
     //Detalhes do usuário
@@ -172,5 +172,63 @@ class UserController extends Controller {
             //Redireciona o usuário, envia a mensagem de erro
             return redirect()->route('user.show', ['user' => $user->id])->with('error', 'Email não enviado!');
         }
+    }
+
+    public function generatePdfUsers(Request $request) {
+        try {
+            //Recuperar os registros do banco de dados
+            $users = User::when(
+                $request->filled('name'), 
+                fn($query) => 
+                $query->whereLike('name', '%'.$request->name.'%')
+            )->when(
+                $request->filled('email'), 
+                fn($query) => 
+                $query->whereLike('email', '%'.$request->email.'%')
+            )->when(
+                $request->filled('start_date_registration'), 
+                fn($query) => 
+                $query->where('created_at', '>=', Carbon::parse($request->start_date_registration))
+            )->when(
+                $request->filled('end_date_registration'), 
+                fn($query) => 
+                $query->where('created_at', '<=', Carbon::parse($request->end_date_registration))
+            )
+            ->orderByDesc('name')
+            ->get();
+
+            //Somar total de registros
+            $totalRecords = $users->count('id');
+
+            //Verificar se a quantidade de registros ultrapassa o limite para gerar PDF
+            $numberRecordsAllowed = 10;
+            if ($totalRecords > $numberRecordsAllowed) {
+                
+                //Redireciona o usuário, envia a mensagem de erro
+                return redirect()->route('user.index', [
+                    'name' => $request->name, 
+                    'email' => $request->email, 
+                    'start_date_registration' => $request->start_date_registration, 
+                    'end_date_registration' => $request->end_date_registration
+                ])->with('error', "Limite de registros ultrapassado para gerar PDF. O limite é de $numberRecordsAllowed registros");
+            }
+
+            //Carrega a string com o conteúdo e determina a orientação e o tamanho do arquivo
+            $pdf = FacadePdf::loadView('users.generate-pdf-users', ['users' => $users])->setPaper('a4', 'portrait');
+
+            //Fazer o download do arquivo
+            return $pdf->download('listar_usuarios.pdf');
+
+        } catch (Exception $e) {
+
+            //Redireciona o usuário, envia a mensagem de erro
+            return redirect()->route('user.index', [
+                    'name' => $request->name, 
+                    'email' => $request->email, 
+                    'start_date_registration' => $request->start_date_registration, 
+                    'end_date_registration' => $request->end_date_registration
+                ])->with('error', 'PDF não gerado!');
+        }
+        
     }
 }
