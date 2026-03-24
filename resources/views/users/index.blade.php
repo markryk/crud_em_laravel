@@ -7,6 +7,7 @@
             <span class="flex space-x-1">
                 <a href="{{ route('user.create') }}" class="btn-success"> Cadastrar </a>
                 <a href="{{ url('generate-pdf-users').(request()->getQueryString() ? '?' . request()->getQueryString() : '') }}" class="btn-warning"> Gerar PDF </a>
+                <a href="{{ url('generate-csv-users').(request()->getQueryString() ? '?' . request()->getQueryString() : '') }}" class="btn-success"> Gerar CSV </a>
             </span>
         </div>
 

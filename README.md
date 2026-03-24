@@ -135,9 +135,9 @@ composer require barryvdh/laravel-dompdf
 
 Gerar a classe para enviar e-mail
 
-´´´
+```
 php artisan make:mail NomeDaClasse
-´´´
-´´´
+```
+```
 php artisan make:mail UserPdfMail
-´´´
+```

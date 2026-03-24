@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserController extends Controller {
     
@@ -229,6 +230,91 @@ class UserController extends Controller {
                     'end_date_registration' => $request->end_date_registration
                 ])->with('error', 'PDF não gerado!');
         }
-        
+    }
+
+    public function generateCSVUsers(Request $request) {
+        try {
+            //Recuperar os registros do banco de dados
+            //$users = User::orderByDesc('id')->get();
+
+            //Recuperar os registros do banco de dados (de acordo com a pesquisa feita)
+            $users = User::when(
+                $request->filled('name'), 
+                fn($query) => 
+                $query->whereLike('name', '%'.$request->name.'%')
+            )->when(
+                $request->filled('email'), 
+                fn($query) => 
+                $query->whereLike('email', '%'.$request->email.'%')
+            )->when(
+                $request->filled('start_date_registration'), 
+                fn($query) => 
+                $query->where('created_at', '>=', Carbon::parse($request->start_date_registration))
+            )->when(
+                $request->filled('end_date_registration'), 
+                fn($query) => 
+                $query->where('created_at', '<=', Carbon::parse($request->end_date_registration))
+            )
+            ->orderByDesc('name')
+            ->get();
+
+            //Somar total de registros
+            $totalRecords = $users->count('id');
+
+            //Verificar se a quantidade de registros ultrapassa o limite para gerar CSV
+            $numberRecordsAllowed = 10;
+            if ($totalRecords > $numberRecordsAllowed) {
+                
+                //Redireciona o usuário, envia a mensagem de erro
+                return redirect()->route('user.index', [
+                    'name' => $request->name, 
+                    'email' => $request->email, 
+                    'start_date_registration' => $request->start_date_registration, 
+                    'end_date_registration' => $request->end_date_registration
+                ])->with('error', "Limite de registros ultrapassado para gerar CSV. O limite é de $numberRecordsAllowed registros");
+            }
+
+            //Cria o arquivo temporário
+            $csvFileName = tempnam(sys_get_temp_dir(), 'csv_'.Str::ulid());
+
+            //Abre o arquivo na forma de escrita
+            $openFile = fopen($csvFileName, 'w');
+
+            //Cria o cabeçalho do Excel
+            $header = ['id', 'Nome', 'E-mail', 'Data de cadastro'];
+
+            //Escreve o cabeçalho no arquivo
+            fputcsv($openFile, $header, ';');
+
+            //Lê os registros recuperados do banco de dados
+            foreach ($users as $user) {
+
+                //Cria o array com os dados da linha do Excel
+                $userArray = [
+                    'id' => $user->id, 
+                    'name' => $user->name, 
+                    'email' => $user->email, 
+                    'created_at' => \Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i:s')
+                ];
+
+                //Escreve o conteúdo no arquivo
+                fputcsv($openFile, $userArray, ';');
+            }
+
+            //Fecha o arquivo, após a escrita
+            fclose($openFile);
+
+            //Realiza o download do arquivo
+            return response()->download($csvFileName, 'list_users'.Str::ulid().'.csv');
+        } catch (Exception $e) {
+
+            //Redireciona o usuário, envia a mensagem de erro
+            return redirect()->route('user.index', [
+                    'name' => $request->name, 
+                    'email' => $request->email, 
+                    'start_date_registration' => $request->start_date_registration, 
+                    'end_date_registration' => $request->end_date_registration
+                ])->with('error', 'CSV não gerado!');
+        }
     }
 }
