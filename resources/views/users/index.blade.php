@@ -13,6 +13,15 @@
 
         <x-alert/>
 
+        <form class="pb-3 grid xl:grid-cols-5 md:grid-cols-2 gap-2 items-end" action="{{ route('user.import-csv-users') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <label for="" class="form-input cursor-pointer flex items-center justify-center bg-white text-gray-700 hover:bg-blue-50">
+                <input type="file" name="file" id="file">
+            </label>
+            <button type="submit" class="btn-success"> Importar </button>
+        </form>
+
         <form class="pb-3 grid xl:grid-cols-5 md:grid-cols-2 gap-2 items-end">
             <input type="text" name="name" class="form-input" placeholder="Digite o nome" value="{{ $name }}">
 

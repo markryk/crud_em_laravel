@@ -224,11 +224,11 @@ class UserController extends Controller {
 
             //Redireciona o usuário, envia a mensagem de erro
             return redirect()->route('user.index', [
-                    'name' => $request->name, 
-                    'email' => $request->email, 
-                    'start_date_registration' => $request->start_date_registration, 
-                    'end_date_registration' => $request->end_date_registration
-                ])->with('error', 'PDF não gerado!');
+                'name' => $request->name, 
+                'email' => $request->email, 
+                'start_date_registration' => $request->start_date_registration, 
+                'end_date_registration' => $request->end_date_registration
+            ])->with('error', 'PDF não gerado!');
         }
     }
 
