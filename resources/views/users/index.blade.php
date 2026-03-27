@@ -17,9 +17,9 @@
             @csrf
 
             <label for="" class="form-input cursor-pointer flex items-center justify-center bg-white text-gray-700 hover:bg-blue-50">
-                <input type="file" name="file" id="file">
+                <input type="file" name="file" id="file" accept=".csv">
             </label>
-            <button type="submit" class="btn-success"> Importar </button>
+            <button type="submit" class="btn-success"> Importar CSV </button>
         </form>
 
         <form class="pb-3 grid xl:grid-cols-5 md:grid-cols-2 gap-2 items-end">

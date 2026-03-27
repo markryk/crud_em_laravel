@@ -141,3 +141,21 @@ php artisan make:mail NomeDaClasse
 ```
 php artisan make:mail UserPdfMail
 ```
+
+Criar o Job
+
+```
+php artisan make:job ImportCsvJob
+```
+
+Instalar a biblioteca para processar o arquivo gradativamente
+
+```
+composer require league/csv
+```
+
+Executar o Job
+
+```
+php artisan queue:work
+```
