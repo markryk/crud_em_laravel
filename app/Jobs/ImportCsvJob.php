@@ -2,10 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Mail\WelcomeUserMail;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use League\Csv\Reader;
 use League\Csv\Statement;
@@ -25,8 +26,7 @@ class ImportCsvJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
-    {
+    public function handle(): void {
         //Define o caminho completo do arquivo CSV armazenado no diretório 'storage/app/private'
         $filePath = storage_path('app/private/'. $this->filePath);
 
@@ -47,11 +47,11 @@ class ImportCsvJob implements ShouldQueue
         //Processa o arquivo CSVe retorna os registros como uma coleção iterável
         $records = (new Statement())->process($csv);
 
-        //Inicializa um array para armazenar os dados que serão inseridos em lote
-        $batchInsert = [];
+        //Variável para receber o tempo progressivo do envio do e-mail
+        $delaySeconds = 0;
 
         //Itera sobre cada linha do arquivo CSV
-        foreach($records as $record){
+        foreach($records as $record) {
 
             //Obtém o valor da coluna 'email', ou null se não existir
             $email = $record['email'] ?? null;
@@ -71,32 +71,28 @@ class ImportCsvJob implements ShouldQueue
                 continue;
             }
 
-            //Adiciona os dados do novo usuário no array de inserção em lote
-            $batchInsert[] = [
+            //Gerar senha temporária
+            $password = Str::random(7);
+
+            //Criar o usuário
+            $user = User::create([
                 'name' => $name, 
                 'email' => $email, 
-                'password' => Hash::make(Str::random(7), ['rounds' => 12]) //Gera uma senha aleatória segura
-            ];
+                'password' => $password
+            ]);
 
-            //Se já existem 50 registros prontos, faz a inserção em lote no banco de dados
-            if (count($batchInsert) >= 50) {
-                //Insere os usuários no banco
-                User::insert($batchInsert);
+            //Enviar o e-mail de boas vindas
+            //Mail::to($email)->send(new WelcomeUserMail($user, $password));
 
-                //Limpa o array para os próximos 50
-                $batchInsert = [];
-            }
+            //Para grande quantidade de usuários, utilizar o queue
+            //Mail::to($email)->queue(new WelcomeUserMail($user, $password));
+
+            //Para grande quantidade de usuários, usar o 'later' para agendar o envio a cada 10 segundos, 
+            //com o objetivo de distribuir a carga de envio de muitos e-mails
+            Mail::to($email)->later(now()->addSeconds($delaySeconds), new WelcomeUserMail($user, $password));
+
+            //Incrementa o atraso em 10 segundos para o próximo
+            $delaySeconds += 10;
         }
-
-        //Após o loop, insere os registros restantes que ficaram abaixo de 50
-        if (!empty($batchInsert) >= 50) {
-            //Insere os usuários no banco
-            User::insert($batchInsert);
-
-            //Limpa o array para os próximos 50
-            $batchInsert = [];
-        }
-        
-
     }
 }
