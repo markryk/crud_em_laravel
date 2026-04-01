@@ -26,6 +26,13 @@
                 <input type="email" name="email" id="email" class="form-input" placeholder="Seu melhor email" value="{{ old('email', $user->email) }}">
             </div>
 
+            <div class="mb-4">
+                <label for="summernote" class="form-label"> Descrição: </label>
+                <textarea name="description" id="summernote" class="form-input">
+                    {{ old('description', $user->description) }}
+                </textarea>
+            </div>
+
             <button type="submit" class="btn-warning"> Salvar </button>
         </form>
     </div>

@@ -9,7 +9,7 @@
 
         <x-alert/>
 
-        <form action="{{ route('user.store') }}" method="POST" class="form-container">
+        <form action="{{ route('user.store') }}" method="post" class="form-container">
             @csrf
             <div class="mb-4">
                 <label for="name" class="form-label"> Nome: </label>
@@ -24,6 +24,13 @@
             <div class="mb-4">
                 <label for="password" class="form-label"> Senha: </label>
                 <input type="password" name="password" id="password" class="form-input" placeholder="Senha com no mínimo 6 caracteres" value="{{ old('password') }}">
+            </div>
+
+            <div class="mb-4">
+                <label for="summernote" class="form-label"> Descrição: </label>
+                <textarea name="description" id="summernote" class="form-input">
+                    {{ old('description') }}
+                </textarea>
             </div>
 
             <button type="submit" class="btn-success"> Cadastrar </button>

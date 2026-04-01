@@ -26,18 +26,20 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required', 
             'email' => 'required|email|unique:users,email,'.($user ? $user->id : null), 
+            'description' => 'required|string', 
             'password' => 'required_if: password, !=, null |min:6'
         ];
     }
 
     public function messages(): array {
         return [
-            /*'name.required' => "Campo nome é obrigatório!", 
+            'name.required' => "Campo nome é obrigatório!", 
             'email.required' => "Campo email é obrigatório!", 
             'email.email' => "Necessário enviar email válido!", 
             'email.unique' => "O email já está cadastrado!",
+            'description.required' => "Campo descrição é obrigatório!", 
             'password.required' => "Campo senha é obrigatório!", 
-            'password.min' => "Senha com no mínimo :min caracteres!"*/
+            'password.min' => "Senha com no mínimo :min caracteres!"
         ];
     }
 }

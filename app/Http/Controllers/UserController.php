@@ -71,7 +71,8 @@ class UserController extends Controller {
             $user = User::create([
                 'name' => $request->name, 
                 'email' => $request->email, 
-                'password' => $request->password
+                'password' => $request->password, 
+                'description' => $request->description
             ]);
 
             return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Usuário cadastrado com sucesso!');
@@ -93,7 +94,8 @@ class UserController extends Controller {
             //Editar as informações do registro no banco de dados
             $user->update([
                 'name' => $request->name,
-                'email' => $request->email
+                'email' => $request->email, 
+                'description' => $request->description
             ]);
 
             //Redireciona o usuário, envia mensagem de sucesso

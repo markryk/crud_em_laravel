@@ -159,3 +159,9 @@ Executar o Job
 ```
 php artisan queue:work
 ```
+
+Instalar o editor Summernote e o jQuery
+
+```
+npm install summernote jquery
+```
