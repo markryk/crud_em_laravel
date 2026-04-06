@@ -76,6 +76,11 @@ Executar as migrations para criar a base de dados e as tabelas
 php artisan migrate
 ```
 
+Executar seed para cadastrar registros de teste
+```
+php artisan db:seed
+```
+
 Instalar as dependências do Node.js
 ```
 npm install
@@ -119,6 +124,14 @@ php artisan make:request NomeDoRequest
 ```
 ```
 php artisan make:request UserRequest
+```
+
+Criar seeder
+```
+php artisan make:seeder NomeSeeder
+```
+```
+php artisan make:seeder UserSeeder
 ```
 
 Instalar a biblioteca para apresentar o alerta personalizado.
