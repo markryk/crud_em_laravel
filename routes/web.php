@@ -2,6 +2,7 @@
     use App\Http\Controllers\UserController;
     use App\Http\Controllers\AuthController;
     use App\Http\Controllers\ImportCSVUserController;
+    use App\Http\Controllers\ForgotPasswordController;
     use Illuminate\Support\Facades\Route;
 
     Route::get('/', function () {
@@ -16,6 +17,14 @@
 
     //Tela de logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    //Solicitar link para resetar senha
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+    //Formulário para redefinir a senha como token
+    Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showRequestForm'])->name('password.reset');
+    Route::post('/reset-password', [ForgotPasswordController::class, 'reset'])->name('password.update');
 
     //Grupo de rotas restritas
     Route::group(['middleware' => 'auth'], function() {
