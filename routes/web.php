@@ -3,6 +3,7 @@
     use App\Http\Controllers\AuthController;
     use App\Http\Controllers\ImportCSVUserController;
     use App\Http\Controllers\ForgotPasswordController;
+    use App\Http\Controllers\GenerateUserController;
     use Illuminate\Support\Facades\Route;
 
     Route::get('/', function () {
@@ -25,6 +26,9 @@
     //Formulário para redefinir a senha como token
     Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showRequestForm'])->name('password.reset');
     Route::post('/reset-password', [ForgotPasswordController::class, 'reset'])->name('password.update');
+
+    //Cadastrar usuários com dados fake
+    Route::get('/generate-user', [GenerateUserController::class, 'index'])->name('generate-user');
 
     //Grupo de rotas restritas
     Route::group(['middleware' => 'auth'], function() {
