@@ -72,6 +72,7 @@ class UserController extends Controller {
                 'name' => $request->name, 
                 'email' => $request->email, 
                 'password' => $request->password, 
+                'date_of_birth' => $request->date_of_birth, 
                 'description' => $request->description
             ]);
 
@@ -95,6 +96,7 @@ class UserController extends Controller {
             $user->update([
                 'name' => $request->name,
                 'email' => $request->email, 
+                'date_of_birth' => $request->date_of_birth, 
                 'description' => $request->description
             ]);
 

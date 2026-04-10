@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,6 +25,7 @@ class UserSeeder extends Seeder
                     'name' => 'Marcos', 
                     'email' => 'marcos.devmarcos@gmail.com', 
                     'password' => '123456', 
+                    'date_of_birth' => Carbon::now()->subYears(30),
                     'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde sed tempora libero similique quam, voluptatibus laboriosam accusantium placeat voluptate qui eos explicabo eaque atque deleniti ex quaerat eum quasi! Itaque?'
                 ]
             );
@@ -34,6 +36,7 @@ class UserSeeder extends Seeder
                     'name' => 'Kelly', 
                     'email' => 'kelly@email.com', 
                     'password' => '123456', 
+                    'date_of_birth' => Carbon::now()->subYears(30)->subDays(5),
                     'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde sed tempora libero similique quam, voluptatibus laboriosam accusantium placeat voluptate qui eos explicabo eaque atque deleniti ex quaerat eum quasi! Itaque?'
                 ]
             );

@@ -96,7 +96,7 @@ Executar seed para cadastrar registros de teste
 php artisan db:seed
 ```
 
-(Comando para re-executar o seed (apaga os dados que não foram cadastrados via seed previamente))
+Remover todas as tabelas do BD e executar novamente todas as migrations e as seeders para cadastrar registros de teste
 ```
 php artisan migrate:fresh --seed
 ```
@@ -201,8 +201,8 @@ npm install summernote jquery
 
 ## Criar CRON
 
-Abrir o arquivo para criar um cron diretamente via terminal (SSH) na VPS
-
+Abrir o arquivo para criar um CRON diretamente via terminal (SSH) na VPS
+(Comando utilizado quando se está no servidor VPS)
 ```
 crontab -e
 ```
@@ -213,6 +213,11 @@ Criar CRON para ser executado a cada minuto
 
 ```
 * * * * * php .../public/script.php
+```
+
+CRON para ser executado a cada minuto (no terminal do servidor VPS)
+```
+* * * * * cd /home/user/htdocs/srvxxx.hstgr.cloud && php artisan schedule:run >> dev/null 2>&1
 ```
 
 Intervalo de tempo usado no CRON
@@ -230,4 +235,33 @@ Intervalo de tempo usado no CRON
 Reiniciar o serviço de CRON (no Linux)
 ```
 sudo service cron restart
+```
+
+## Criar CRON para enviar e-mail de aniversário
+
+Criar o console responsável por recuperar os aniversariantes e enviar o e-mail
+```
+php artisan make:command SendBirthdayEmail
+```
+
+Criar a classe para definir e montar o conteúdo de um e-mail de aniversário
+```
+php artisan make:mail BirthdayEmail
+```
+
+Criar a view com o conteúdo do e-mail
+```
+php artisan make:view emails.birthday
+```
+
+ - Agendar o comando no routes/console.php
+
+Testar os agendamentos
+```
+php artisan schedule:run
+```
+
+Ver todos os comandos agendados
+```
+php artisan schedule:list
 ```
