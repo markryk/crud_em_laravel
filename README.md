@@ -96,6 +96,11 @@ Executar seed para cadastrar registros de teste
 php artisan db:seed
 ```
 
+(Comando para re-executar o seed (apaga os dados que não foram cadastrados via seed previamente))
+```
+php artisan migrate:fresh --seed
+```
+
 Instalar as dependências do Node.js
 ```
 npm install
@@ -192,4 +197,37 @@ Instalar o editor Summernote e o jQuery
 
 ```
 npm install summernote jquery
+```
+
+## Criar CRON
+
+Abrir o arquivo para criar um cron diretamente via terminal (SSH) na VPS
+
+```
+crontab -e
+```
+
+Criar CRON para ser executado a cada minuto
+(as reticências são o caminho completo de onde está o arquivo 'script')
+(digitado no terminal)
+
+```
+* * * * * php .../public/script.php
+```
+
+Intervalo de tempo usado no CRON
+
+```
+* * * * * comando
+| | | | |
+| | | | |_ Dia da semana (0-7) [0 e 7 = Domingo]
+| | | |___ Mês (1-12)
+| | |_____ Dia do mês (1-31)
+| |_______ Hora (0-23)
+|_________ Minuto (0-59)
+```
+
+Reiniciar o serviço de CRON (no Linux)
+```
+sudo service cron restart
 ```
