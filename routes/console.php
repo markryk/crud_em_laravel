@@ -1,7 +1,7 @@
 <?php
     use Illuminate\Support\Facades\Schedule;
 
-    //Executar a tarefa acada minuto
+    //Executar a tarefa a cada minuto
     Schedule::command('app:send-birthday-email')->everyMinute();
 
     //Executar a tarefa uma vez ao dia, às 08:00

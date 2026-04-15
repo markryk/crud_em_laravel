@@ -175,7 +175,9 @@ php artisan make:mail NomeDaClasse
 php artisan make:mail UserPdfMail
 ```
 
-Criar o Job
+## Criar Job
+
+Job para importar CSV (arquivo ficará em "app\Jobs")
 
 ```
 php artisan make:job ImportCsvJob
@@ -239,12 +241,12 @@ sudo service cron restart
 
 ## Criar CRON para enviar e-mail de aniversário
 
-Criar o console responsável por recuperar os aniversariantes e enviar o e-mail
+Comando responsável por recuperar os aniversariantes e enviar o e-mail
 ```
 php artisan make:command SendBirthdayEmail
 ```
 
-Criar a classe para definir e montar o conteúdo de um e-mail de aniversário
+Comando para definir e montar o conteúdo de um e-mail de aniversário
 ```
 php artisan make:mail BirthdayEmail
 ```
@@ -264,4 +266,19 @@ php artisan schedule:run
 Ver todos os comandos agendados
 ```
 php artisan schedule:list
+```
+
+JOB para enviar e-mail de aniversário (arquivo ficará em "app\Jobs")
+```
+php artisan make:job SendBirthdayEmailJob
+```
+
+Inicia o processamento das filas (queues) no servidor local
+```
+php artisan queue:work
+```
+
+Testa os agendamentos no servidor local
+```
+php artisan schedule:run
 ```

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\SendBirthdayEmailJob;
 use App\Models\User;
 use App\Mail\BirthdayEmail;
 use Carbon\Carbon;
@@ -36,9 +37,16 @@ class SendBirthdayEmail extends Command
         $users = User::whereMonth('date_of_birth', $today->month)->whereDay('date_of_birth', $today->day)->get();
 
         //Lê os registros retornados do banco de dados
-        foreach ($users as $user) {
-            Mail::to($user->email)->send(new BirthdayEmail($user));
-            $this->info("Email enviado para {$user->name}");
+        foreach ($users as $index => $user) {
+            /*Mail::to($user->email)->send(new BirthdayEmail($user));
+            $this->info("Email enviado para {$user->name}");*/
+
+            //função addSeconds(): atrasa (no ex. abaixo, 10) segundos entre cada job
+            dispatch(new SendBirthdayEmailJob($user))->delay(now()->addSeconds($index * 10));
+
+            $this->info("Job de e-mail enfileirado para: {$user->name}");
         }
+        
+        return Command::SUCCESS;
     }
 }

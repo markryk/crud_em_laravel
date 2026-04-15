@@ -41,6 +41,39 @@ class UserSeeder extends Seeder
                 ]
             );
 
+            User::firstOrCreate(
+                ['email' => 'mark@email.com'],
+                [
+                    'name' => 'Mark', 
+                    'email' => 'mark@email.com', 
+                    'password' => '123456', 
+                    'date_of_birth' => Carbon::now()->subYears(30),
+                    'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde sed tempora libero similique quam, voluptatibus laboriosam accusantium placeat voluptate qui eos explicabo eaque atque deleniti ex quaerat eum quasi! Itaque?'
+                ]
+            );
+
+            User::firstOrCreate(
+                ['email' => 'leribi@email.com'],
+                [
+                    'name' => 'Leribí da Silva', 
+                    'email' => 'leribi@email.com', 
+                    'password' => '123456', 
+                    'date_of_birth' => Carbon::now()->subYears(30),
+                    'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde sed tempora libero similique quam, voluptatibus laboriosam accusantium placeat voluptate qui eos explicabo eaque atque deleniti ex quaerat eum quasi! Itaque?'
+                ]
+            );
+
+            User::firstOrCreate(
+                ['email' => 'lirirrixa@email.com'],
+                [
+                    'name' => 'Lirirrixa Timbaleia', 
+                    'email' => 'lirirrixa@email.com', 
+                    'password' => '123456', 
+                    'date_of_birth' => Carbon::now()->subYears(30),
+                    'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde sed tempora libero similique quam, voluptatibus laboriosam accusantium placeat voluptate qui eos explicabo eaque atque deleniti ex quaerat eum quasi! Itaque?'
+                ]
+            );
+
         } catch (Exception $e) {
             Log::notice('Usuário não cadastrado. ', ['error' => $e->getMessage()]);
         }
