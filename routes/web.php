@@ -1,12 +1,16 @@
 <?php
     use App\Http\Controllers\UserController;
+    use App\Http\Controllers\SiteController;
     use App\Http\Controllers\AuthController;
     use App\Http\Controllers\ImportCSVUserController;
     use App\Http\Controllers\ForgotPasswordController;
     use App\Http\Controllers\GenerateUserController;
     use Illuminate\Support\Facades\Route;
 
-    Route::get('/', function () {
+    //Tela do site
+    Route::get('/', [SiteController::class, 'home'])->name('home');
+
+    Route::get('/dashboard', function () {
         return view('welcome');
     })->name('dashboard');
 
@@ -33,6 +37,7 @@
     //Grupo de rotas restritas
     Route::group(['middleware' => 'auth'], function() {
 
+        //Gerenciar o conteúdo do dashboard
         Route::get('/index-user', [UserController::class, 'index'])->name('user.index');
         Route::get('/show-user/{user}', [UserController::class, 'show'])->name('user.show');
 
@@ -52,5 +57,9 @@
         Route::get('/generate-csv-users', [UserController::class, 'generateCSVUsers'])->name('user.generate-csv-users');
 
         Route::post('/import-csv-users', [ImportCSVUserController::class, 'importCSVUsers'])->name('user.import-csv-users');
+
+        //Gerenciar o conteúdo do site
+        Route::get('/edit-site-home', [SiteController::class, 'edit'])->name('site-home.edit');
+        Route::put('/update-site-home', [SiteController::class, 'update'])->name('site-home.update');
     });
 ?>
